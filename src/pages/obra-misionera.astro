@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Icon from '@/components/Icon.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerOrdenado } from '@/lib/contenido';
+
+const misiones = await Promise.all(
+  (await obtenerOrdenado('misiones')).map(async (m) => ({ ...m, Content: (await render(m)).Content })),
+);
+
+const titulo = 'Obra misionera';
+const descripcion =
+  'Conoce la obra misionera de la iglesia y cómo puedes apoyar la predicación del evangelio más allá de nuestra ciudad.';
+const migas = [{ label: titulo, href: '/obra-misionera' }];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader
+    title={titulo}
+    eyebrow="Misiones"
+    intro="“Id por todo el mundo y predicad el evangelio a toda criatura.” — Marcos 16:15"
+    migas={migas}
+  />
+
+  {
+    misiones.map(({ id, data, Content }, i) => (
+      <Section tono={i % 2 === 0 ? 'blanco' : 'claro'} id={id}>
+        <article class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+          <div class:list={[i % 2 === 1 && 'lg:order-2']}>
+            {data.imagen ? (
+              <Image
+                src={data.imagen}
+                alt={`Obra misionera en ${data.lugar}`}
+                class="aspect-[4/3] w-full rounded-3xl object-cover shadow-md"
+                widths={[600, 1200]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+            ) : (
+              <Placeholder icono="lucide:globe" class="aspect-[4/3] w-full rounded-3xl" />
+            )}
+          </div>
+          <div>
+            <p class="eyebrow flex items-center gap-2">
+              <Icon name="lucide:map-pin" class="size-4" />
+              {data.lugar}
+            </p>
+            <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">{data.titulo}</h2>
+            <p class="mt-4 font-serif text-xl text-brand-800 italic">{data.resumen}</p>
+            <div class="prose-site mt-6">
+              <Content />
+            </div>
+          </div>
+        </article>
+      </Section>
+    ))
+  }
+
+  <Section tono="arena">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+      <div>
+        <h2 class="text-2xl font-semibold sm:text-3xl">Apoya la obra misionera</h2>
+        <p class="mt-2 text-lg text-stone-600">Con tus oraciones, tu tiempo o tus aportes voluntarios.</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href="/donaciones" class="btn-secondary">Donar</a>
+        <a href="/iglesias-hijas" class="btn border border-brand-700 text-brand-700 hover:bg-brand-50">
+          Ver iglesias hijas
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

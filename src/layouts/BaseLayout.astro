@@ -1,0 +1,35 @@
+---
+import '@/styles/global.css';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import SEO, { type Props as SEOProps } from '@/components/SEO.astro';
+import { esquemaMigas, type Miga } from '@/lib/schema';
+
+interface Props extends SEOProps {
+  /** Migas de pan sin incluir "Inicio"; se agregan como BreadcrumbList en JSON-LD. */
+  migas?: Miga[];
+}
+
+const { migas = [], jsonLd = [], ...seo } = Astro.props;
+const esquemas = migas.length ? [...jsonLd, esquemaMigas(migas, Astro.site!)] : jsonLd;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <SEO {...seo} jsonLd={esquemas} />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#contenido"
+      class="sr-only z-50 rounded-full bg-accent-400 px-4 py-2 font-semibold text-brand-950 focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Saltar al contenido
+    </a>
+    <Header />
+    <main id="contenido" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

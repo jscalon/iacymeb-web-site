@@ -1,0 +1,111 @@
+---
+import Icon from '@/components/Icon.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { enlaceWhatsapp, site } from '@/lib/site';
+
+const { cuentas, pagoMovil } = site.donaciones;
+const { email, whatsapp } = site.contacto;
+
+const titulo = 'Donaciones';
+const descripcion =
+  'Apoya la obra de la iglesia, las misiones y las iglesias hijas con tus aportes voluntarios. Datos bancarios y contacto.';
+const migas = [{ label: titulo, href: '/donaciones' }];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader
+    title="Aportes voluntarios"
+    eyebrow={titulo}
+    intro="Cada aporte, grande o pequeño, sostiene la predicación del evangelio, el cuidado de la congregación y la obra misionera."
+    migas={migas}
+  />
+
+  <Section tono="blanco">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
+      <div>
+        <blockquote class="border-l-4 border-accent-400 pl-6 font-serif text-2xl leading-relaxed text-brand-800 italic">
+          “Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.”
+          <footer class="mt-3 font-sans text-base text-stone-500 not-italic">— 2 Corintios 9:7</footer>
+        </blockquote>
+        <h2 class="mt-12 text-2xl font-semibold">¿A dónde va tu aporte?</h2>
+        <ul class="mt-5 space-y-4">
+          {
+            [
+              { icono: 'lucide:church', texto: 'El sostenimiento de la iglesia local y sus ministerios.' },
+              { icono: 'lucide:globe', texto: 'La obra misionera y la plantación de iglesias hijas.' },
+              { icono: 'lucide:hand-heart', texto: 'La ayuda a familias necesitadas de la comunidad.' },
+            ].map((item) => (
+              <li class="flex gap-3 text-lg text-stone-700">
+                <Icon name={item.icono as `lucide:${string}`} class="mt-1 size-5 shrink-0 text-accent-500" />
+                {item.texto}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="space-y-6">
+        {
+          cuentas.map((cuenta) => (
+            <article class="rounded-2xl border border-stone-200 bg-paper p-6">
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:landmark" class="size-6 text-brand-600" />
+                <h2 class="text-xl font-semibold">{cuenta.banco}</h2>
+              </div>
+              <dl class="mt-5 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
+                <dt class="font-medium text-stone-500">Titular</dt>
+                <dd class="text-stone-900">{cuenta.titular}</dd>
+                <dt class="font-medium text-stone-500">Tipo de cuenta</dt>
+                <dd class="text-stone-900">{cuenta.tipo}</dd>
+                <dt class="font-medium text-stone-500">Número</dt>
+                <dd class="font-mono text-base break-all text-stone-900">{cuenta.numero}</dd>
+                <dt class="font-medium text-stone-500">Documento</dt>
+                <dd class="text-stone-900">{cuenta.documento}</dd>
+              </dl>
+            </article>
+          ))
+        }
+
+        {
+          pagoMovil.telefono && (
+            <article class="rounded-2xl border border-stone-200 bg-paper p-6">
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:smartphone" class="size-6 text-brand-600" />
+                <h2 class="text-xl font-semibold">Pago móvil</h2>
+              </div>
+              <dl class="mt-5 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
+                <dt class="font-medium text-stone-500">Banco</dt>
+                <dd class="text-stone-900">{pagoMovil.banco}</dd>
+                <dt class="font-medium text-stone-500">Teléfono</dt>
+                <dd class="font-mono text-base text-stone-900">{pagoMovil.telefono}</dd>
+                <dt class="font-medium text-stone-500">Documento</dt>
+                <dd class="text-stone-900">{pagoMovil.documento}</dd>
+              </dl>
+            </article>
+          )
+        }
+
+        <div class="rounded-2xl bg-brand-900 p-6 text-brand-100">
+          <h2 class="text-xl font-semibold text-white">¿Tienes dudas o quieres reportar tu aporte?</h2>
+          <p class="mt-2">Escríbenos y con gusto te atenderemos.</p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href={`mailto:${email}?subject=${encodeURIComponent('Aporte voluntario')}`} class="btn-primary">
+              <Icon name="lucide:mail" class="size-4" />
+              Escribir por correo
+            </a>
+            {
+              whatsapp && (
+                <a href={enlaceWhatsapp(whatsapp)} target="_blank" rel="noopener noreferrer" class="btn-ghost">
+                  <Icon name="simple-icons:whatsapp" class="size-4" />
+                  WhatsApp
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

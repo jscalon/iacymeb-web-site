@@ -1,0 +1,64 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BookCover from '@/components/BookCover.astro';
+import Icon from '@/components/Icon.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { site } from '@/lib/site';
+
+export const getStaticPaths = (async () => {
+  const libros = await getCollection('libros');
+  return libros.map((libro) => ({ params: { id: libro.id }, props: { libro } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  libro: CollectionEntry<'libros'>;
+}
+
+const { libro } = Astro.props;
+const { titulo, autor, descripcion, enlace } = libro.data;
+const { Content } = await render(libro);
+const migas = [
+  { label: 'Academia Bíblica', href: '/academia' },
+  { label: titulo, href: `/academia/${libro.id}` },
+];
+const asunto = encodeURIComponent(`Información sobre el libro "${titulo}"`);
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas} type="article">
+  <PageHeader title={titulo} eyebrow={autor} migas={migas} />
+
+  <Section tono="blanco">
+    <div class="grid gap-10 md:grid-cols-[16rem_1fr] lg:gap-16">
+      <div class="mx-auto w-48 md:w-full">
+        <BookCover libro={libro} sizes="(min-width: 768px) 256px, 192px" />
+      </div>
+      <div>
+        <p class="font-serif text-2xl leading-relaxed text-brand-800 italic">{descripcion}</p>
+        <div class="prose-site mt-6">
+          <Content />
+        </div>
+        <div class="mt-10 flex flex-wrap gap-3">
+          {
+            enlace && (
+              <a href={enlace} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <Icon name="lucide:external-link" class="size-4" />
+                Obtener el libro
+              </a>
+            )
+          }
+          <a href={`mailto:${site.contacto.email}?subject=${asunto}`} class="btn-secondary">
+            <Icon name="lucide:mail" class="size-4" />
+            Pedir información
+          </a>
+          <a href="/academia" class="btn text-brand-700 hover:bg-brand-50">
+            <Icon name="lucide:arrow-left" class="size-4" />
+            Volver a la academia
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

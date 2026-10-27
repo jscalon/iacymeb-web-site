@@ -1,0 +1,249 @@
+# Configuración de Sveltia CMS (panel en /admin).
+# Los campos deben coincidir con los esquemas de src/content.config.ts.
+# Documentación: https://sveltiacms.app/en/docs
+
+backend:
+  name: github
+  repo: JuanGimenez7/iacymeb-web-site # TODO: confirmar usuario/repositorio en GitHub
+  branch: main
+  commit_messages:
+    create: 'Crea {{collection}} "{{slug}}"'
+    update: 'Actualiza {{collection}} "{{slug}}"'
+    delete: 'Elimina {{collection}} "{{slug}}"'
+    uploadMedia: 'Sube "{{path}}"'
+    deleteMedia: 'Elimina "{{path}}"'
+
+site_url: https://iacymencuentrobiblico.netlify.app # TODO: cambiar al dominio definitivo
+logo_url: /favicon.svg
+
+# Por defecto, las imágenes se guardan junto a cada entrada para que Astro las optimice.
+media_folder: /src/content/uploads
+public_folder: /src/content/uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+output:
+  omit_empty_optional_fields: true
+
+collections:
+  - name: reuniones
+    label: Reuniones
+    label_singular: Reunión
+    folder: src/content/reuniones
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: nombre
+    slug: '{{nombre}}'
+    summary: '{{dia}} {{hora}} · {{nombre}}'
+    sortable_fields: [orden, nombre, dia]
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+      - name: dia
+        label: Día
+        widget: select
+        options: [Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado]
+      - { name: hora, label: Hora, widget: string, hint: 'Ejemplo: 10:00 a. m.' }
+      - { name: descripcion, label: Descripción, widget: text }
+      - { name: frecuencia, label: Frecuencia, widget: string, required: false, hint: 'Ejemplo: Cada 15 días. Dejar vacío si es semanal.' }
+      - { name: destacada, label: Destacar en portada y pie de página, widget: boolean, default: false, required: false }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+
+  - name: ministerios
+    label: Ministerios
+    label_singular: Ministerio
+    folder: src/content/ministerios
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: nombre
+    slug: '{{nombre}}'
+    media_folder: ''
+    public_folder: ''
+    sortable_fields: [orden, nombre]
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+      - { name: descripcion, label: Descripción breve, widget: text }
+      - { name: imagen, label: Imagen, widget: image, required: false }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Más información, widget: markdown, required: false }
+
+  - name: equipo
+    label: Equipo pastoral y junta
+    label_singular: Persona
+    folder: src/content/equipo
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: nombre
+    slug: '{{cargo}}-{{nombre}}'
+    summary: '{{nombre}} · {{cargo}}'
+    media_folder: ''
+    public_folder: ''
+    sortable_fields: [orden, nombre, grupo]
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+      - { name: cargo, label: Cargo, widget: string, hint: 'Ejemplo: Pastor principal, Tesorero' }
+      - name: grupo
+        label: Grupo
+        widget: select
+        options:
+          - { label: Equipo pastoral, value: pastoral }
+          - { label: Junta administrativa, value: junta }
+      - { name: foto, label: Foto, widget: image, required: false }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Reseña (solo pastores), widget: markdown, required: false }
+
+  - name: libros
+    label: Academia Bíblica (libros)
+    label_singular: Libro
+    folder: src/content/libros
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: titulo
+    slug: '{{titulo}}'
+    media_folder: ''
+    public_folder: ''
+    sortable_fields: [orden, titulo]
+    fields:
+      - { name: titulo, label: Título, widget: string }
+      - { name: autor, label: Autor, widget: string }
+      - { name: descripcion, label: Descripción breve, widget: text }
+      - { name: portada, label: Portada, widget: image, required: false }
+      - { name: enlace, label: Enlace para obtener el libro, widget: string, required: false, hint: 'URL completa (https://…). Opcional.' }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Descripción completa, widget: markdown, required: false }
+
+  - name: misiones
+    label: Obra misionera
+    label_singular: Obra misionera
+    folder: src/content/misiones
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: titulo
+    slug: '{{lugar}}'
+    media_folder: ''
+    public_folder: ''
+    fields:
+      - { name: titulo, label: Título, widget: string }
+      - { name: lugar, label: Lugar, widget: string }
+      - { name: resumen, label: Resumen, widget: text }
+      - { name: imagen, label: Imagen, widget: image, required: false }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Reseña, widget: markdown }
+
+  - name: iglesiasHijas
+    label: Iglesias hijas
+    label_singular: Iglesia hija
+    folder: src/content/iglesias-hijas
+    extension: md
+    format: frontmatter
+    create: true
+    identifier_field: nombre
+    slug: '{{nombre}}'
+    media_folder: ''
+    public_folder: ''
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+      - { name: ciudad, label: Ciudad, widget: string }
+      - { name: direccion, label: Dirección, widget: string }
+      - { name: pastores, label: Pastores, widget: list, field: { name: nombre, label: Nombre, widget: string } }
+      - { name: reuniones, label: Horario de reuniones, widget: string, required: false, hint: 'Ejemplo: Domingos 9:00 a. m.' }
+      - { name: foto, label: Foto, widget: image, required: false }
+      - { name: mapa, label: Enlace de Google Maps, widget: string, required: false, hint: 'Opcional. Si se deja vacío, se busca la dirección.' }
+      - { name: telefono, label: Teléfono, widget: string, required: false }
+      - { name: instagram, label: Instagram (URL), widget: string, required: false }
+      - { name: facebook, label: Facebook (URL), widget: string, required: false }
+      - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Reseña, widget: markdown, required: false }
+
+  - name: paginas
+    label: Páginas
+    files:
+      - name: nosotros
+        label: Quiénes somos
+        file: src/content/nosotros/nosotros.md
+        format: frontmatter
+        fields:
+          - { name: titulo, label: Título, widget: string }
+          - { name: descripcion, label: Descripción para buscadores, widget: text }
+          - { name: mision, label: Misión, widget: text }
+          - { name: vision, label: Visión, widget: text }
+          - name: creencias
+            label: En qué creemos
+            widget: list
+            fields:
+              - { name: titulo, label: Título, widget: string }
+              - { name: texto, label: Texto, widget: text }
+          - { name: body, label: Historia, widget: markdown }
+
+  - name: configuracion
+    label: Datos de la iglesia
+    files:
+      - name: sitio
+        label: Datos generales, contacto y donaciones
+        file: src/data/site.json
+        format: json
+        fields:
+          - { name: nombre, label: Nombre completo, widget: string }
+          - { name: nombreCorto, label: Nombre corto, widget: string }
+          - { name: denominacion, label: Denominación, widget: string }
+          - { name: lema, label: Lema, widget: string }
+          - { name: descripcion, label: Descripción (portada y buscadores), widget: text }
+          - name: direccion
+            label: Dirección
+            widget: object
+            fields:
+              - { name: calle, label: Calle / sector, widget: string }
+              - { name: ciudad, label: Ciudad, widget: string }
+              - { name: estado, label: Estado, widget: string, required: false }
+              - { name: pais, label: País, widget: string }
+              - { name: codigoPais, label: Código de país (2 letras), widget: string }
+              - { name: codigoPostal, label: Código postal, widget: string, required: false }
+          - name: mapa
+            label: Mapa
+            widget: object
+            fields:
+              - { name: enlace, label: Enlace de Google Maps, widget: string, required: false }
+              - { name: consulta, label: Texto de búsqueda en el mapa, widget: string, required: false, hint: 'Opcional. Nombre del lugar tal como aparece en Google Maps.' }
+              - { name: latitud, label: Latitud, widget: number, value_type: float, required: false }
+              - { name: longitud, label: Longitud, widget: number, value_type: float, required: false }
+          - name: contacto
+            label: Contacto
+            widget: object
+            fields:
+              - { name: email, label: Correo, widget: string }
+              - { name: telefono, label: Teléfono, widget: string, required: false }
+              - { name: whatsapp, label: WhatsApp (con código de país), widget: string, required: false, hint: 'Ejemplo: +58 412 0000000' }
+          - name: redes
+            label: Redes sociales (URL completas)
+            widget: object
+            fields:
+              - { name: instagram, label: Instagram, widget: string, required: false }
+              - { name: facebook, label: Facebook, widget: string, required: false }
+              - { name: youtube, label: YouTube, widget: string, required: false }
+              - { name: spotify, label: Spotify, widget: string, required: false }
+          - name: donaciones
+            label: Donaciones
+            widget: object
+            fields:
+              - name: cuentas
+                label: Cuentas bancarias
+                widget: list
+                fields:
+                  - { name: banco, label: Banco, widget: string }
+                  - { name: titular, label: Titular, widget: string }
+                  - { name: tipo, label: Tipo de cuenta, widget: string }
+                  - { name: numero, label: Número de cuenta, widget: string }
+                  - { name: documento, label: RIF / documento, widget: string }
+              - name: pagoMovil
+                label: Pago móvil
+                widget: object
+                fields:
+                  - { name: banco, label: Banco, widget: string, required: false }
+                  - { name: telefono, label: Teléfono, widget: string, required: false }
+                  - { name: documento, label: Documento, widget: string, required: false }

@@ -1,0 +1,21 @@
+---
+import Icon from '@/components/Icon.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página no encontrada" description="La página que buscas no existe o fue movida." noindex>
+  <section class="container-site flex flex-col items-center py-24 text-center lg:py-32">
+    <p class="font-serif text-8xl font-semibold text-accent-400">404</p>
+    <h1 class="mt-4 text-3xl font-semibold sm:text-4xl">No encontramos esta página</h1>
+    <p class="mt-4 max-w-md text-lg text-stone-600">
+      Es posible que el enlace haya cambiado. Te invitamos a volver al inicio o a ver nuestros horarios de reunión.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn-secondary">
+        <Icon name="lucide:house" class="size-4" />
+        Ir al inicio
+      </a>
+      <a href="/reuniones" class="btn border border-brand-700 text-brand-700 hover:bg-brand-50">Ver reuniones</a>
+    </div>
+  </section>
+</BaseLayout>

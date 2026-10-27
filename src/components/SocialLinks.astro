@@ -1,0 +1,28 @@
+---
+import Icon from '@/components/Icon.astro';
+import { redesSociales } from '@/lib/site';
+
+interface Props {
+  class?: string;
+  linkClass?: string;
+}
+
+const {
+  class: className = 'flex flex-wrap gap-2',
+  linkClass = 'flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-accent-400 hover:text-brand-950',
+} = Astro.props;
+---
+
+{
+  redesSociales.length > 0 && (
+    <ul class={className}>
+      {redesSociales.map((red) => (
+        <li>
+          <a href={red.url} class={linkClass} target="_blank" rel="noopener noreferrer">
+            <Icon name={red.icono as `simple-icons:${string}`} class="size-4.5" title={red.nombre} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

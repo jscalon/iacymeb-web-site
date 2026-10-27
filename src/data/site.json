@@ -1,0 +1,48 @@
+{
+  "nombre": "Iglesia Alianza Cristiana y Misionera \"El Encuentro Bíblico\"",
+  "nombreCorto": "El Encuentro Bíblico",
+  "denominacion": "Alianza Cristiana y Misionera",
+  "lema": "Un encuentro con Dios a través de su Palabra",
+  "descripcion": "Somos una iglesia cristiana evangélica de la Alianza Cristiana y Misionera. Te invitamos a conocer a Jesús, crecer en la Palabra y servir juntos en familia.",
+  "direccion": {
+    "calle": "Dirección por confirmar",
+    "ciudad": "Ciudad por confirmar",
+    "estado": "",
+    "pais": "Venezuela",
+    "codigoPais": "VE",
+    "codigoPostal": ""
+  },
+  "mapa": {
+    "enlace": "",
+    "consulta": "",
+    "latitud": null,
+    "longitud": null
+  },
+  "contacto": {
+    "email": "secretariaencuentrobiblico@gmail.com",
+    "telefono": "",
+    "whatsapp": ""
+  },
+  "redes": {
+    "instagram": "",
+    "facebook": "",
+    "youtube": "",
+    "spotify": ""
+  },
+  "donaciones": {
+    "cuentas": [
+      {
+        "banco": "Banco por confirmar",
+        "titular": "Iglesia Alianza Cristiana y Misionera El Encuentro Bíblico",
+        "tipo": "Corriente",
+        "numero": "0000-0000-00-0000000000",
+        "documento": "RIF J-00000000-0"
+      }
+    ],
+    "pagoMovil": {
+      "banco": "",
+      "telefono": "",
+      "documento": ""
+    }
+  }
+}

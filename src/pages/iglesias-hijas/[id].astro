@@ -1,0 +1,127 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Icon from '@/components/Icon.astro';
+import MapEmbed from '@/components/MapEmbed.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { enlaceMapaDe, enlaceTelefono, site } from '@/lib/site';
+
+export const getStaticPaths = (async () => {
+  const iglesias = await getCollection('iglesiasHijas');
+  return iglesias.map((iglesia) => ({ params: { id: iglesia.id }, props: { iglesia } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  iglesia: CollectionEntry<'iglesiasHijas'>;
+}
+
+const { iglesia } = Astro.props;
+const { nombre, ciudad, direccion, pastores, foto, mapa, telefono, instagram, facebook, reuniones } = iglesia.data;
+const { Content } = await render(iglesia);
+
+const consultaMapa = `${direccion}, ${ciudad}, ${site.direccion.pais}`;
+const migas = [
+  { label: 'Iglesias hijas', href: '/iglesias-hijas' },
+  { label: nombre, href: `/iglesias-hijas/${iglesia.id}` },
+];
+const descripcion = `${nombre}, iglesia hija de ${site.nombreCorto} en ${ciudad}. Pastores, horarios, dirección y contacto.`;
+---
+
+<BaseLayout title={nombre} description={descripcion} migas={migas}>
+  <PageHeader title={nombre} eyebrow={`Iglesia hija · ${ciudad}`} migas={migas} />
+
+  <Section tono="blanco">
+    <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr]">
+      <div>
+        {
+          foto && (
+            <Image
+              src={foto}
+              alt={`Fotografía de ${nombre}`}
+              class="mb-8 aspect-[16/9] w-full rounded-3xl object-cover shadow-md"
+              widths={[700, 1400]}
+              sizes="(min-width: 1024px) 60vw, 100vw"
+            />
+          )
+        }
+        <div class="prose-site">
+          <Content />
+        </div>
+        <MapEmbed consulta={consultaMapa} titulo={`Mapa de ubicación de ${nombre}`} class="mt-10 aspect-[16/9] w-full" />
+      </div>
+
+      <aside class="h-fit space-y-6 rounded-2xl bg-sand p-6 lg:sticky lg:top-28">
+        {
+          pastores.length > 0 && (
+            <div>
+              <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">
+                {pastores.length === 1 ? 'Pastor' : 'Pastores'}
+              </h2>
+              <ul class="mt-2 space-y-1 text-lg">
+                {pastores.map((p) => (
+                  <li>{p}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
+          reuniones && (
+            <div>
+              <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Reuniones</h2>
+              <p class="mt-2 text-lg">{reuniones}</p>
+            </div>
+          )
+        }
+        <div>
+          <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Dirección</h2>
+          <p class="mt-2 text-lg">{direccion}, {ciudad}</p>
+          <a
+            href={mapa ?? enlaceMapaDe(consultaMapa)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-1 inline-block font-medium text-brand-600 hover:text-brand-800"
+          >
+            Abrir en Google Maps →
+          </a>
+        </div>
+        {
+          (telefono || instagram || facebook) && (
+            <div>
+              <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Contacto</h2>
+              <ul class="mt-2 space-y-2">
+                {telefono && (
+                  <li>
+                    <a href={enlaceTelefono(telefono)} class="flex items-center gap-2 hover:text-brand-700">
+                      <Icon name="lucide:phone" class="size-4" />
+                      {telefono}
+                    </a>
+                  </li>
+                )}
+                {instagram && (
+                  <li>
+                    <a href={instagram} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-brand-700">
+                      <Icon name="simple-icons:instagram" class="size-4" />
+                      Instagram
+                    </a>
+                  </li>
+                )}
+                {facebook && (
+                  <li>
+                    <a href={facebook} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-brand-700">
+                      <Icon name="simple-icons:facebook" class="size-4" />
+                      Facebook
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

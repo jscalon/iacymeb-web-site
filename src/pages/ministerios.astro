@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import PageHeader from '@/components/PageHeader.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerOrdenado } from '@/lib/contenido';
+
+const ministerios = await Promise.all(
+  (await obtenerOrdenado('ministerios')).map(async (m) => ({ ...m, Content: (await render(m)).Content })),
+);
+
+const titulo = 'Ministerios';
+const descripcion =
+  'Conoce los ministerios de la iglesia: alabanza, niños, jóvenes, damas, varones, evangelismo y misiones.';
+const migas = [
+  { label: 'Nosotros', href: '/nosotros' },
+  { label: titulo, href: '/ministerios' },
+];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader
+    title={titulo}
+    eyebrow="Sirviendo juntos"
+    intro="Cada ministerio es una oportunidad para crecer en la fe y poner tus dones al servicio de Dios y de los demás."
+    migas={migas}
+  />
+
+  <Section tono="blanco">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {
+        ministerios.map(({ data, Content }) => (
+          <article class="flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+            {data.imagen ? (
+              <Image
+                src={data.imagen}
+                alt=""
+                class="aspect-[16/9] w-full object-cover"
+                widths={[400, 800]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              />
+            ) : (
+              <Placeholder icono="lucide:users" class="aspect-[16/9] w-full" />
+            )}
+            <div class="p-6">
+              <h2 class="text-xl font-semibold">{data.nombre}</h2>
+              <p class="mt-2 leading-relaxed text-stone-600">{data.descripcion}</p>
+              <div class="prose-site mt-3 text-base">
+                <Content />
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section tono="arena" centrado title="¿Quieres servir?" intro="Habla con el liderazgo de la iglesia o escríbenos y te ayudaremos a encontrar tu lugar.">
+    <div class="text-center">
+      <a href="/contacto" class="btn-secondary">Contáctanos</a>
+    </div>
+  </Section>
+</BaseLayout>

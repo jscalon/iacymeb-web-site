@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  libro: CollectionEntry<'libros'>;
+  class?: string;
+  sizes?: string;
+}
+
+const { libro, class: className, sizes = '(min-width: 1024px) 240px, 45vw' } = Astro.props;
+const { titulo, autor, portada } = libro.data;
+---
+
+{
+  portada ? (
+    <Image
+      src={portada}
+      alt={`Portada de ${titulo}`}
+      class:list={['aspect-[2/3] w-full rounded-lg object-cover shadow-md', className]}
+      widths={[240, 480, 720]}
+      sizes={sizes}
+    />
+  ) : (
+    <div
+      class:list={[
+        'relative flex aspect-[2/3] w-full flex-col justify-between overflow-hidden rounded-lg bg-gradient-to-br from-brand-700 to-brand-950 p-4 text-left shadow-md',
+        className,
+      ]}
+      role="img"
+      aria-label={`Portada de ${titulo}`}
+    >
+      <div class="patron-cruces absolute inset-0 opacity-10" />
+      <span class="relative h-1 w-10 rounded bg-accent-400" />
+      <span class="relative font-serif text-base leading-snug font-semibold text-white sm:text-lg">{titulo}</span>
+      <span class="relative text-[0.65rem] tracking-wider text-brand-200 uppercase">{autor}</span>
+    </div>
+  )
+}

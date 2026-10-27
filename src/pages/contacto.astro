@@ -1,0 +1,86 @@
+---
+import Icon from '@/components/Icon.astro';
+import MapEmbed from '@/components/MapEmbed.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { esquemaIglesia } from '@/lib/schema';
+import { direccionCompleta, enlaceMapa, enlaceTelefono, enlaceWhatsapp, site } from '@/lib/site';
+
+const { email, telefono, whatsapp } = site.contacto;
+
+const titulo = 'Contacto';
+const descripcion = `Dirección, mapa, correo, teléfono y redes sociales de ${site.nombre}.`;
+const migas = [{ label: titulo, href: '/contacto' }];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas} jsonLd={[esquemaIglesia(Astro.site!)]}>
+  <PageHeader
+    title="Estamos para servirte"
+    eyebrow={titulo}
+    intro="¿Tienes preguntas, una petición de oración o quieres visitarnos? Escríbenos o acércate a cualquiera de nuestras reuniones."
+    migas={migas}
+  />
+
+  <Section tono="blanco">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div class="space-y-8">
+        <div class="flex gap-4">
+          <Icon name="lucide:map-pin" class="size-6 shrink-0 text-accent-500" />
+          <div>
+            <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Dirección</h2>
+            <p class="mt-1 text-lg">{direccionCompleta}</p>
+            <a href={enlaceMapa} target="_blank" rel="noopener noreferrer" class="mt-1 inline-block font-medium text-brand-600 hover:text-brand-800">
+              Abrir en Google Maps →
+            </a>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <Icon name="lucide:mail" class="size-6 shrink-0 text-accent-500" />
+          <div>
+            <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Secretaría</h2>
+            <a href={`mailto:${email}`} class="mt-1 block text-lg break-all text-brand-700 hover:text-brand-900">{email}</a>
+          </div>
+        </div>
+
+        {
+          telefono && (
+            <div class="flex gap-4">
+              <Icon name="lucide:phone" class="size-6 shrink-0 text-accent-500" />
+              <div>
+                <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Teléfono</h2>
+                <a href={enlaceTelefono(telefono)} class="mt-1 block text-lg text-brand-700 hover:text-brand-900">
+                  {telefono}
+                </a>
+              </div>
+            </div>
+          )
+        }
+
+        <div class="flex flex-wrap gap-3">
+          <a href={`mailto:${email}`} class="btn-secondary">
+            <Icon name="lucide:mail" class="size-4" />
+            Enviar un correo
+          </a>
+          {
+            whatsapp && (
+              <a href={enlaceWhatsapp(whatsapp)} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <Icon name="simple-icons:whatsapp" class="size-4" />
+                Escríbenos por WhatsApp
+              </a>
+            )
+          }
+        </div>
+
+        <div>
+          <h2 class="mb-3 font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Síguenos</h2>
+          <SocialLinks linkClass="flex size-11 items-center justify-center rounded-full bg-brand-700 text-white transition-colors hover:bg-accent-400 hover:text-brand-950" />
+        </div>
+      </div>
+
+      <MapEmbed titulo={`Mapa de ubicación de ${site.nombre}`} class="aspect-square w-full sm:aspect-[4/3]" />
+    </div>
+  </Section>
+</BaseLayout>

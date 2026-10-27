@@ -1,0 +1,22 @@
+---
+// Relleno visual para cuando una entrada todavía no tiene foto.
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+  icono?: `lucide:${string}`;
+  class?: string;
+}
+
+const { icono = 'lucide:image', class: className = 'aspect-[4/3] w-full' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900',
+    className,
+  ]}
+  aria-hidden="true"
+>
+  <div class="patron-cruces absolute inset-0 opacity-10"></div>
+  <Icon name={icono} class="relative size-12 text-accent-300/80" />
+</div>

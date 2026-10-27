@@ -1,0 +1,50 @@
+---
+import MeetingCard from '@/components/MeetingCard.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerOrdenado } from '@/lib/contenido';
+import { direccionCompleta, enlaceMapa } from '@/lib/site';
+
+const reuniones = await obtenerOrdenado('reuniones');
+const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'] as const;
+const porDia = dias
+  .map((dia) => ({ dia, reuniones: reuniones.filter((r) => r.data.dia === dia) }))
+  .filter((grupo) => grupo.reuniones.length > 0);
+
+const titulo = 'Reuniones regulares';
+const descripcion =
+  'Horarios de los cultos dominicales, oración de los miércoles y reuniones de varones, damas, jóvenes y niños.';
+const migas = [{ label: titulo, href: '/reuniones' }];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader title={titulo} eyebrow="Horarios" intro={descripcion} migas={migas} />
+
+  <Section tono="blanco">
+    <div class="space-y-12">
+      {
+        porDia.map((grupo) => (
+          <section aria-labelledby={`dia-${grupo.dia}`}>
+            <h2 id={`dia-${grupo.dia}`} class="mb-5 flex items-center gap-4 text-2xl font-semibold">
+              {grupo.dia}
+              <span class="h-px flex-1 bg-stone-200" aria-hidden="true" />
+            </h2>
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {grupo.reuniones.map((r) => (
+                <MeetingCard reunion={r} />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+
+    <p class="mt-14 rounded-2xl bg-sand p-6 text-stone-700">
+      Todas las reuniones se realizan en <strong>{direccionCompleta}</strong>, salvo que se indique lo contrario.
+      <a href={enlaceMapa} target="_blank" rel="noopener noreferrer" class="font-medium text-brand-600 underline">
+        ¿Cómo llegar?
+      </a>
+    </p>
+  </Section>
+</BaseLayout>

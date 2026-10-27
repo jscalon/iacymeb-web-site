@@ -1,0 +1,60 @@
+---
+import { Font } from 'astro:assets';
+import { rutaLimpia, site } from '@/lib/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  /** Ruta absoluta (desde /public) o URL de la imagen para redes sociales. */
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = site.descripcion,
+  image = '/og-default.png',
+  type = 'website',
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.nombreCorto}` : site.nombre;
+const canonical = new URL(rutaLimpia(Astro.url), Astro.site);
+const imageUrl = new URL(image, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<meta name="theme-color" content="#17304f" />
+<meta name="generator" content={Astro.generator} />
+
+<meta property="og:type" content={type} />
+<meta property="og:locale" content="es_VE" />
+<meta property="og:site_name" content={site.nombre} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<Font cssVariable="--font-lora" preload={[{ style: 'normal', subset: 'latin' }]} />
+<Font cssVariable="--font-inter" preload={[{ subset: 'latin' }]} />
+
+{jsonLd.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />)}

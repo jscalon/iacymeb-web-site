@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from '@/components/Icon.astro';
+import Logo from '@/components/Logo.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import { direccionCompleta, enlaceMapa, enlaceTelefono, navegacion, site } from '@/lib/site';
+
+const reuniones = (await getCollection('reuniones'))
+  .filter((r) => r.data.destacada)
+  .sort((a, b) => a.data.orden - b.data.orden);
+
+const enlaces = navegacion.flatMap((item) => item.children ?? [item]).filter((item) => item.href !== '/');
+const anio = new Date().getFullYear();
+---
+
+<footer class="bg-brand-950 text-brand-100">
+  <div class="container-site grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+    <div class="space-y-4">
+      <a href="/" class="flex items-center gap-3">
+        <Logo class="size-11" />
+        <span class="font-serif text-lg font-semibold text-white">{site.nombreCorto}</span>
+      </a>
+      <p class="text-sm leading-relaxed text-brand-200">{site.lema}</p>
+      <SocialLinks />
+    </div>
+
+    <div>
+      <h2 class="mb-4 font-sans text-sm font-semibold tracking-widest text-accent-300 uppercase">Reuniones</h2>
+      <ul class="space-y-3 text-sm">
+        {
+          reuniones.map((r) => (
+            <li>
+              <span class="block font-medium text-white">{r.data.nombre}</span>
+              <span class="text-brand-200">
+                {r.data.dia}, {r.data.hora}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <a href="/reuniones" class="mt-4 inline-block text-sm font-medium text-accent-300 hover:text-accent-200">
+        Ver todos los horarios →
+      </a>
+    </div>
+
+    <div>
+      <h2 class="mb-4 font-sans text-sm font-semibold tracking-widest text-accent-300 uppercase">Contacto</h2>
+      <ul class="space-y-3 text-sm">
+        <li>
+          <a href={enlaceMapa} target="_blank" rel="noopener noreferrer" class="flex gap-2 hover:text-white">
+            <Icon name="lucide:map-pin" class="mt-0.5 size-4 shrink-0 text-accent-300" />
+            {direccionCompleta}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.contacto.email}`} class="flex gap-2 break-all hover:text-white">
+            <Icon name="lucide:mail" class="mt-0.5 size-4 shrink-0 text-accent-300" />
+            {site.contacto.email}
+          </a>
+        </li>
+        {
+          site.contacto.telefono && (
+            <li>
+              <a href={enlaceTelefono(site.contacto.telefono)} class="flex gap-2 hover:text-white">
+                <Icon name="lucide:phone" class="mt-0.5 size-4 shrink-0 text-accent-300" />
+                {site.contacto.telefono}
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+
+    <nav aria-label="Pie de página">
+      <h2 class="mb-4 font-sans text-sm font-semibold tracking-widest text-accent-300 uppercase">Explora</h2>
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm lg:grid-cols-1">
+        {
+          enlaces.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-white">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="container-site flex flex-col gap-2 py-6 text-xs text-brand-300 sm:flex-row sm:justify-between">
+      <p>© {anio} {site.nombre}</p>
+      <p>Miembro de la {site.denominacion}</p>
+    </div>
+  </div>
+</footer>

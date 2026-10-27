@@ -1,16 +1,285 @@
 ---
+import { Image } from 'astro:assets';
+import BookCover from '@/components/BookCover.astro';
+import Icon from '@/components/Icon.astro';
+import MapEmbed from '@/components/MapEmbed.astro';
+import MeetingCard from '@/components/MeetingCard.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerNosotros, obtenerOrdenado } from '@/lib/contenido';
+import { esquemaIglesia } from '@/lib/schema';
+import { direccionCompleta, enlaceMapa, site } from '@/lib/site';
+
+const [reuniones, ministerios, libros, misiones, iglesiasHijas, nosotros] = await Promise.all([
+  obtenerOrdenado('reuniones'),
+  obtenerOrdenado('ministerios'),
+  obtenerOrdenado('libros'),
+  obtenerOrdenado('misiones'),
+  obtenerOrdenado('iglesiasHijas'),
+  obtenerNosotros(),
+]);
+
+const destacadas = reuniones.filter((r) => r.data.destacada);
+const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'lucide:crown'] as const;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout jsonLd={[esquemaIglesia(Astro.site!)]}>
+  <!-- Portada -->
+  <section class="relative overflow-hidden bg-brand-900 text-white">
+    <div class="patron-cruces absolute inset-0 opacity-[0.06]" aria-hidden="true"></div>
+    <div class="absolute -top-32 -left-32 size-96 rounded-full bg-brand-500/30 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -right-24 -bottom-40 size-[28rem] rounded-full bg-accent-400/20 blur-3xl" aria-hidden="true">
+    </div>
+
+    <div class="container-site relative grid items-center gap-12 py-20 lg:grid-cols-[1.4fr_1fr] lg:py-28">
+      <div>
+        <h1 class="text-white">
+          <span class="eyebrow block font-sans text-accent-300">Iglesia {site.denominacion}</span>
+          <span class="mt-4 block text-5xl font-semibold sm:text-6xl lg:text-7xl">{site.nombreCorto}</span>
+        </h1>
+        <p class="mt-6 max-w-xl font-serif text-2xl text-brand-100 italic">{site.lema}</p>
+        <p class="mt-4 max-w-xl text-lg leading-relaxed text-brand-200">{site.descripcion}</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="#visitanos" class="btn-primary px-6 py-3 text-base">
+            Visítanos
+            <Icon name="lucide:arrow-right" class="size-4" />
+          </a>
+          <a href="/reuniones" class="btn-ghost px-6 py-3 text-base">Horarios de reunión</a>
+        </div>
+      </div>
+
+      <aside class="rounded-3xl border border-white/10 bg-white/5 p-7 backdrop-blur-sm" aria-label="Próximas reuniones">
+        <p class="eyebrow text-accent-300">Te esperamos</p>
+        <ul class="mt-5 divide-y divide-white/10">
+          {
+            destacadas.map((r) => (
+              <li class="flex items-center justify-between gap-4 py-4">
+                <div>
+                  <p class="font-serif text-lg font-semibold text-white">{r.data.nombre}</p>
+                  <p class="text-sm text-brand-200">{r.data.dia}</p>
+                </div>
+                <span class="rounded-full bg-accent-400 px-3 py-1 text-sm font-semibold whitespace-nowrap text-brand-950">
+                  {r.data.hora}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={enlaceMapa}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 flex items-start gap-2 text-sm text-brand-100 hover:text-white"
+        >
+          <Icon name="lucide:map-pin" class="mt-0.5 size-4 shrink-0 text-accent-300" />
+          {direccionCompleta}
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Bienvenida y creencias -->
+  <Section tono="blanco">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow mb-3">Bienvenido</p>
+        <h2 class="text-3xl font-semibold sm:text-4xl">Una iglesia para encontrarte con Dios</h2>
+        <p class="mt-5 text-lg leading-relaxed text-stone-600">{nosotros.data.mision}</p>
+        <a href="/nosotros" class="btn-secondary mt-8">
+          Conoce quiénes somos
+          <Icon name="lucide:arrow-right" class="size-4" />
+        </a>
+      </div>
+      <div>
+        <p class="mb-5 font-serif text-xl text-brand-800 italic">Jesucristo es nuestro…</p>
+        <ul class="grid gap-4 sm:grid-cols-2">
+          {
+            nosotros.data.creencias.map((c, i) => (
+              <li class="rounded-2xl bg-sand p-5">
+                <Icon name={iconosCreencias[i % iconosCreencias.length]} class="size-7 text-accent-500" />
+                <h3 class="mt-3 text-lg font-semibold">{c.titulo.replace(/^Cristo, nuestro\s*/i, '')}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-stone-600">{c.texto}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Reuniones -->
+  <Section
+    eyebrow="Reuniones regulares"
+    title="Acompáñanos durante la semana"
+    intro="Hay un lugar para ti y para toda tu familia: niños, jóvenes, damas y varones."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {reuniones.map((r) => <MeetingCard reunion={r} />)}
+    </div>
+  </Section>
+
+  <!-- Ministerios -->
+  <Section
+    tono="blanco"
+    eyebrow="Ministerios"
+    title="Sirviendo juntos"
+    intro="Cada ministerio es una oportunidad para crecer en la fe y usar tus dones al servicio de Dios y de los demás."
+  >
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        ministerios.slice(0, 6).map((m) => (
+          <article class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+            {m.data.imagen ? (
+              <Image
+                src={m.data.imagen}
+                alt=""
+                class="aspect-[16/9] w-full object-cover"
+                widths={[400, 800]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            ) : (
+              <Placeholder icono="lucide:users" class="aspect-[16/9] w-full" />
+            )}
+            <div class="p-6">
+              <h3 class="text-xl font-semibold">{m.data.nombre}</h3>
+              <p class="mt-2 leading-relaxed text-stone-600">{m.data.descripcion}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="mt-10 text-center">
+      <a href="/ministerios" class="btn-secondary">Ver todos los ministerios</a>
+    </div>
+  </Section>
+
+  <!-- Academia -->
+  <Section tono="arena">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.3fr]">
+      <div>
+        <p class="eyebrow mb-3">Academia Bíblica</p>
+        <h2 class="text-3xl font-semibold sm:text-4xl">Crece en el conocimiento de la Palabra</h2>
+        <p class="mt-5 text-lg leading-relaxed text-stone-600">
+          Materiales de estudio preparados para cada etapa de tu camino con Cristo: desde los fundamentos de la fe hasta
+          la vida devocional.
+        </p>
+        <a href="/academia" class="btn-secondary mt-8">
+          Ver libros de la academia
+          <Icon name="lucide:arrow-right" class="size-4" />
+        </a>
+      </div>
+      <ul class="grid grid-cols-3 gap-4 sm:gap-6">
+        {
+          libros.slice(0, 3).map((libro) => (
+            <li>
+              <a href={`/academia/${libro.id}`} class="group block" aria-label={libro.data.titulo}>
+                <BookCover
+                  libro={libro}
+                  class="transition group-hover:-translate-y-1 group-hover:shadow-xl"
+                  sizes="(min-width: 1024px) 200px, 30vw"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- Misiones -->
+  <Section
+    tono="blanco"
+    eyebrow="Misiones"
+    title="Hasta lo último de la tierra"
+    intro="Como iglesia de la Alianza, llevamos el evangelio más allá de nuestras paredes y plantamos nuevas congregaciones."
+  >
+    <div class="grid gap-6 md:grid-cols-2">
+      <a
+        href="/obra-misionera"
+        class="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-3xl bg-brand-800 p-8 text-white"
+      >
+        <div class="patron-cruces absolute inset-0 opacity-10" aria-hidden="true"></div>
+        <Icon name="lucide:globe" class="absolute top-8 right-8 size-14 text-accent-300/70" />
+        <p class="eyebrow relative text-accent-300">Obra misionera</p>
+        <h3 class="relative mt-2 text-2xl font-semibold text-white">
+          {misiones.map((m) => m.data.lugar).join(', ') || 'Nuestra obra misionera'}
+        </h3>
+        <p class="relative mt-2 text-brand-100">{misiones[0]?.data.resumen}</p>
+        <span class="relative mt-5 inline-flex items-center gap-2 font-semibold text-accent-300 group-hover:gap-3">
+          Conoce la obra <Icon name="lucide:arrow-right" class="size-4" />
+        </span>
+      </a>
+      <a
+        href="/iglesias-hijas"
+        class="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-3xl bg-accent-100 p-8"
+      >
+        <Icon name="lucide:church" class="absolute top-8 right-8 size-14 text-accent-500/70" />
+        <p class="eyebrow relative">Iglesias hijas</p>
+        <h3 class="relative mt-2 text-2xl font-semibold">
+          {iglesiasHijas.length}
+          {iglesiasHijas.length === 1 ? 'congregación plantada' : 'congregaciones plantadas'}
+        </h3>
+        <p class="relative mt-2 text-stone-700">
+          Conoce a sus pastores, dónde se reúnen y cómo contactarlos.
+        </p>
+        <span class="relative mt-5 inline-flex items-center gap-2 font-semibold text-brand-700 group-hover:gap-3">
+          Ver iglesias hijas <Icon name="lucide:arrow-right" class="size-4" />
+        </span>
+      </a>
+    </div>
+  </Section>
+
+  <!-- Donaciones -->
+  <section class="bg-accent-400">
+    <div class="container-site flex flex-col items-start justify-between gap-6 py-14 md:flex-row md:items-center">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-semibold text-brand-950">Sé parte de lo que Dios está haciendo</h2>
+        <p class="mt-3 text-lg text-brand-900">
+          Tus aportes voluntarios sostienen la obra local, las misiones y las iglesias hijas.
+        </p>
+      </div>
+      <a href="/donaciones" class="btn bg-brand-950 px-6 py-3 text-base text-white hover:bg-brand-800">
+        <Icon name="lucide:heart-handshake" class="size-5" />
+        Cómo donar
+      </a>
+    </div>
+  </section>
+
+  <!-- Ubicación -->
+  <Section id="visitanos" eyebrow="Visítanos" title="¿Dónde nos encontramos?">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+      <ul class="space-y-6">
+        <li class="flex gap-4">
+          <Icon name="lucide:map-pin" class="size-6 shrink-0 text-accent-500" />
+          <div>
+            <h3 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Dirección</h3>
+            <p class="mt-1 text-lg">{direccionCompleta}</p>
+            <a href={enlaceMapa} target="_blank" rel="noopener noreferrer" class="mt-1 inline-block font-medium text-brand-600 hover:text-brand-800">
+              Abrir en Google Maps →
+            </a>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <Icon name="lucide:clock" class="size-6 shrink-0 text-accent-500" />
+          <div>
+            <h3 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Horarios</h3>
+            <ul class="mt-1 space-y-1 text-lg">
+              {destacadas.map((r) => <li>{r.data.dia}: {r.data.hora} · {r.data.nombre}</li>)}
+            </ul>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <Icon name="lucide:mail" class="size-6 shrink-0 text-accent-500" />
+          <div>
+            <h3 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Escríbenos</h3>
+            <a href={`mailto:${site.contacto.email}`} class="mt-1 block text-lg break-all text-brand-700 hover:text-brand-900">
+              {site.contacto.email}
+            </a>
+          </div>
+        </li>
+      </ul>
+      <MapEmbed titulo={`Mapa de ubicación de ${site.nombre}`} />
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import { urlMapaEmbebido } from '@/lib/site';
+
+interface Props {
+  /** Dirección o coordenadas; por defecto, la ubicación de la iglesia. */
+  consulta?: string;
+  titulo?: string;
+  class?: string;
+}
+
+const { consulta, titulo = 'Mapa de ubicación', class: className = 'aspect-[4/3] w-full' } = Astro.props;
+---
+
+<div class:list={['overflow-hidden rounded-2xl border border-stone-200 bg-stone-100 shadow-sm', className]}>
+  <iframe
+    src={urlMapaEmbebido(consulta)}
+    title={titulo}
+    class="size-full"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen></iframe>
+</div>

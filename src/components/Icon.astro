@@ -1,0 +1,27 @@
+---
+import { getIconData, iconToHTML, iconToSVG, replaceIDs } from '@iconify/utils';
+import { icons as lucide } from '@iconify-json/lucide';
+import { icons as simpleIcons } from '@iconify-json/simple-icons';
+
+interface Props {
+  /** Formato `coleccion:nombre`, p. ej. `lucide:map-pin` o `simple-icons:instagram`. */
+  name: `lucide:${string}` | `simple-icons:${string}`;
+  class?: string;
+  /** Texto accesible; si se omite, el ícono es decorativo. */
+  title?: string;
+}
+
+const { name, class: className = 'size-5', title } = Astro.props;
+const [coleccion, nombre] = name.split(':');
+const data = getIconData(coleccion === 'lucide' ? lucide : simpleIcons, nombre);
+if (!data) throw new Error(`Ícono no encontrado: ${name}`);
+
+const { attributes, body } = iconToSVG(data, { height: 'auto' });
+const svg = iconToHTML(replaceIDs(body), {
+  ...attributes,
+  class: className,
+  ...(title ? { role: 'img', 'aria-label': title } : { 'aria-hidden': 'true' }),
+});
+---
+
+<Fragment set:html={svg} />

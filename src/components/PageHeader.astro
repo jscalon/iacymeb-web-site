@@ -1,0 +1,49 @@
+---
+import type { Miga } from '@/lib/schema';
+
+interface Props {
+  title: string;
+  intro?: string;
+  eyebrow?: string;
+  migas?: Miga[];
+}
+
+const { title, intro, eyebrow, migas = [] } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-brand-900 text-white">
+  <div class="patron-cruces absolute inset-0 opacity-[0.07]" aria-hidden="true"></div>
+  <div class="absolute -top-24 -right-24 size-80 rounded-full bg-accent-400/20 blur-3xl" aria-hidden="true"></div>
+  <div class="container-site relative py-14 lg:py-20">
+    {
+      migas.length > 0 && (
+        <nav aria-label="Ruta de navegación" class="mb-6 text-sm text-brand-200">
+          <ol class="flex flex-wrap items-center gap-2">
+            <li>
+              <a href="/" class="hover:text-white">
+                Inicio
+              </a>
+            </li>
+            {migas.map((miga, i) => (
+              <li class="flex items-center gap-2">
+                <span aria-hidden="true">/</span>
+                {i === migas.length - 1 ? (
+                  <span aria-current="page" class="text-white">
+                    {miga.label}
+                  </span>
+                ) : (
+                  <a href={miga.href} class="hover:text-white">
+                    {miga.label}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    {eyebrow && <p class="eyebrow mb-3 text-accent-300">{eyebrow}</p>}
+    <h1 class="max-w-3xl text-4xl font-semibold text-white sm:text-5xl">{title}</h1>
+    {intro && <p class="mt-5 max-w-2xl text-lg leading-relaxed text-brand-100">{intro}</p>}
+  </div>
+</section>

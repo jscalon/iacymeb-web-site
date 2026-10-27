@@ -1,0 +1,40 @@
+---
+import BookCover from '@/components/BookCover.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerOrdenado } from '@/lib/contenido';
+
+const libros = await obtenerOrdenado('libros');
+
+const titulo = 'Academia Bíblica';
+const descripcion =
+  'Libros y materiales de estudio de la Academia Bíblica de la iglesia para crecer en el conocimiento de la Palabra.';
+const migas = [{ label: titulo, href: '/academia' }];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader title={titulo} eyebrow="Formación" intro={descripcion} migas={migas} />
+
+  <Section tono="blanco">
+    <ul class="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+      {
+        libros.map((libro) => (
+          <li>
+            <a href={`/academia/${libro.id}`} class="group block">
+              <BookCover libro={libro} class="transition group-hover:-translate-y-1 group-hover:shadow-xl" />
+              <h2 class="mt-4 text-lg font-semibold group-hover:text-brand-600">{libro.data.titulo}</h2>
+              <p class="mt-1 text-sm leading-relaxed text-stone-600">{libro.data.descripcion}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section tono="arena" centrado title="¿Quieres inscribirte?" intro="Escríbenos para conocer las fechas de inicio de cada nivel y cómo obtener los libros.">
+    <div class="text-center">
+      <a href="/contacto" class="btn-secondary">Solicitar información</a>
+    </div>
+  </Section>
+</BaseLayout>

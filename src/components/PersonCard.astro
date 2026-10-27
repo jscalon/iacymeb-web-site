@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  persona: CollectionEntry<'equipo'>;
+  grande?: boolean;
+}
+
+const { persona, grande = false } = Astro.props;
+const { nombre, cargo, foto } = persona.data;
+const { Content } = await render(persona);
+const iniciales = nombre
+  .split(/\s+/)
+  .slice(0, 2)
+  .map((p) => p[0])
+  .join('')
+  .toUpperCase();
+---
+
+<article class="text-center">
+  {
+    foto ? (
+      <Image
+        src={foto}
+        alt={`Foto de ${nombre}`}
+        class:list={['mx-auto rounded-full object-cover shadow-md', grande ? 'size-44' : 'size-28']}
+        widths={[176, 352]}
+        sizes={grande ? '176px' : '112px'}
+      />
+    ) : (
+      <div
+        class:list={[
+          'mx-auto flex items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-brand-900 font-serif font-semibold text-accent-200 shadow-md',
+          grande ? 'size-44 text-5xl' : 'size-28 text-3xl',
+        ]}
+        aria-hidden="true"
+      >
+        {iniciales}
+      </div>
+    )
+  }
+  <h3 class:list={['mt-5 font-semibold', grande ? 'text-2xl' : 'text-lg']}>{nombre}</h3>
+  <p class="eyebrow mt-1">{cargo}</p>
+  {
+    grande && persona.body?.trim() && (
+      <div class="mx-auto mt-4 max-w-sm text-stone-600">
+        <Content />
+      </div>
+    )
+  }
+</article>

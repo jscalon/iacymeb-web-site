@@ -1,0 +1,49 @@
+---
+import PageHeader from '@/components/PageHeader.astro';
+import PersonCard from '@/components/PersonCard.astro';
+import Section from '@/components/Section.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { obtenerOrdenado } from '@/lib/contenido';
+
+const equipo = await obtenerOrdenado('equipo');
+const pastores = equipo.filter((p) => p.data.grupo === 'pastoral');
+const junta = equipo.filter((p) => p.data.grupo === 'junta');
+
+const titulo = 'Equipo pastoral';
+const descripcion = 'Conoce a los pastores y a la junta administrativa de la iglesia.';
+const migas = [
+  { label: 'Nosotros', href: '/nosotros' },
+  { label: titulo, href: '/equipo-pastoral' },
+];
+---
+
+<BaseLayout title={titulo} description={descripcion} migas={migas}>
+  <PageHeader
+    title={titulo}
+    eyebrow="Liderazgo"
+    intro="Personas llamadas por Dios para cuidar, enseñar y servir a la congregación."
+    migas={migas}
+  />
+
+  <Section tono="blanco" eyebrow="Pastores" title="Nuestros pastores">
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+      {pastores.map((p) => <PersonCard persona={p} grande />)}
+    </div>
+  </Section>
+
+  {
+    junta.length > 0 && (
+      <Section
+        eyebrow="Junta administrativa"
+        title="Junta administrativa"
+        intro="Hermanos que velan por la administración y el buen orden de la iglesia."
+      >
+        <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-4">
+          {junta.map((p) => (
+            <PersonCard persona={p} />
+          ))}
+        </div>
+      </Section>
+    )
+  }
+</BaseLayout>
