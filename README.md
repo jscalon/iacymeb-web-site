@@ -54,7 +54,7 @@ La identidad actual es **provisional**:
 
 ## Despliegue en Netlify
 
-1. Subir el repositorio a GitHub (el panel espera `JuanGimenez7/iacymeb-web-site`; si cambia, actualizar `repo` en `public/admin/config.yml`).
+1. Subir el repositorio a GitHub (el panel apunta a `jscalon/iacymeb-web-site`; si cambia, actualizar `repo` en `public/admin/config.yml`).
 2. En Netlify: **Add new project → Import from Git** y elegir el repositorio. La configuración se lee de `netlify.toml` (`pnpm build`, carpeta `dist`).
 3. **Inicio de sesión del panel (OAuth con GitHub):**
    - En GitHub: *Settings → Developer settings → OAuth Apps → New OAuth App*, con *Authorization callback URL* `https://api.netlify.com/auth/done`. Copiar el Client ID y generar un Client Secret.

@@ -4,7 +4,7 @@
 
 backend:
   name: github
-  repo: JuanGimenez7/iacymeb-web-site # TODO: confirmar usuario/repositorio en GitHub
+  repo: jscalon/iacymeb-web-site
   branch: main
   commit_messages:
     create: 'Crea {{collection}} "{{slug}}"'
@@ -13,7 +13,7 @@ backend:
     uploadMedia: 'Sube "{{path}}"'
     deleteMedia: 'Elimina "{{path}}"'
 
-site_url: https://iacymencuentrobiblico.netlify.app # TODO: cambiar al dominio definitivo
+site_url: https://iacymencuentrobiblico.netlify.app # cambiar si se conecta un dominio propio
 logo_url: /favicon.svg
 
 # Por defecto, las imágenes se guardan junto a cada entrada para que Astro las optimice.
