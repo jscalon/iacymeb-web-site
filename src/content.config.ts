@@ -63,8 +63,8 @@ const libros = defineCollection({
   schema: (ctx) =>
     z.object({
       titulo: z.string(),
-      autor: z.string(),
-      descripcion: z.string(),
+      autor: textoOpcional,
+      descripcion: textoOpcional,
       portada: imagenOpcional(ctx),
       enlace: urlOpcional,
       orden: z.number().default(0),
@@ -77,7 +77,7 @@ const iglesiasHijas = defineCollection({
     z.object({
       nombre: z.string(),
       ciudad: z.string(),
-      direccion: z.string(),
+      direccion: textoOpcional,
       pastores: z.array(z.string()).default([]),
       foto: imagenOpcional(ctx),
       mapa: urlOpcional,

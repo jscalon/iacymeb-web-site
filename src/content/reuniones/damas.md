@@ -1,8 +1,8 @@
 ---
 nombre: Reunión de damas
-dia: Jueves
-hora: 6:00 p. m.
+dia: Sábado
+hora: 8:30 a. m.
 descripcion: Un espacio para que las mujeres crezcan juntas en la fe y la amistad.
-frecuencia: Cada 15 días
-orden: 4
+frecuencia: Una vez al mes
+orden: 5
 ---

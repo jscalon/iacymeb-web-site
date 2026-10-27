@@ -2,43 +2,39 @@
   "nombre": "Iglesia Alianza Cristiana y Misionera \"El Encuentro Bíblico\"",
   "nombreCorto": "El Encuentro Bíblico",
   "denominacion": "Alianza Cristiana y Misionera",
-  "lema": "Un encuentro con Dios a través de su Palabra",
-  "descripcion": "Somos una iglesia cristiana evangélica de la Alianza Cristiana y Misionera. Te invitamos a conocer a Jesús, crecer en la Palabra y servir juntos en familia.",
+  "lema": "Un lugar para la familia",
+  "descripcion": "Somos una iglesia cristiana evangélica de la Alianza Cristiana y Misionera en San Diego, Carabobo. Te invitamos a conocer a Jesús, crecer en la Palabra y servir juntos en familia.",
   "direccion": {
-    "calle": "Dirección por confirmar",
-    "ciudad": "Ciudad por confirmar",
-    "estado": "",
+    "calle": "Urb. La Esmeralda",
+    "ciudad": "San Diego",
+    "estado": "Carabobo",
     "pais": "Venezuela",
     "codigoPais": "VE",
-    "codigoPostal": ""
+    "codigoPostal": "2006"
   },
   "mapa": {
-    "enlace": "",
+    "enlace": "https://maps.app.goo.gl/6qTCyDDU3UYJvdp2A",
     "consulta": "",
-    "latitud": null,
-    "longitud": null
+    "latitud": 10.2302322,
+    "longitud": -67.9664264
   },
   "contacto": {
     "email": "secretariaencuentrobiblico@gmail.com",
-    "telefono": "",
-    "whatsapp": ""
+    "telefono": "+58 414-4240829",
+    "whatsapp": "+58 414-4240829"
   },
   "redes": {
-    "instagram": "",
-    "facebook": "",
-    "youtube": "",
-    "spotify": ""
+    "instagram": "https://www.instagram.com/iacymeb/",
+    "facebook": "https://www.facebook.com/iacymeb",
+    "youtube": "https://www.youtube.com/@iacymeb",
+    "spotify": "https://open.spotify.com/show/2tLH78PUyrzlTU2mQGZfTx"
+  },
+  "academia": {
+    "horario": "Domingos, 9:00 a. m.",
+    "presentacion": "Estudia la Palabra de Dios de forma ordenada: desde quién es Jesucristo y la nueva vida en Él, hasta el discipulado y el panorama completo de la Biblia."
   },
   "donaciones": {
-    "cuentas": [
-      {
-        "banco": "Banco por confirmar",
-        "titular": "Iglesia Alianza Cristiana y Misionera El Encuentro Bíblico",
-        "tipo": "Corriente",
-        "numero": "0000-0000-00-0000000000",
-        "documento": "RIF J-00000000-0"
-      }
-    ],
+    "cuentas": [],
     "pagoMovil": {
       "banco": "",
       "telefono": "",

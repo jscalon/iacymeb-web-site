@@ -1,8 +1,8 @@
 ---
-nombre: Oración y estudio bíblico
+nombre: Culto de oración
 dia: Miércoles
-hora: 7:00 p. m.
-descripcion: Un tiempo para orar juntos y profundizar en el estudio de las Escrituras.
+hora: 6:30 p. m.
+descripcion: Un tiempo para buscar juntos a Dios en oración, por la iglesia, nuestras familias y nuestra nación.
 destacada: true
-orden: 2
+orden: 4
 ---

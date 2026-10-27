@@ -1,8 +1,8 @@
 ---
 nombre: Culto dominical
 dia: Domingo
-hora: 10:00 a. m.
-descripcion: Adoración congregacional, predicación de la Palabra y escuela bíblica para niños.
+hora: 10:30 a. m.
+descripcion: Adoración congregacional y predicación de la Palabra. ¡Te esperamos con toda tu familia!
 destacada: true
-orden: 1
+orden: 2
 ---

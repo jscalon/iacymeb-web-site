@@ -112,7 +112,7 @@ const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'l
   <Section
     eyebrow="Reuniones regulares"
     title="Acompáñanos durante la semana"
-    intro="Hay un lugar para ti y para toda tu familia: niños, jóvenes, damas y varones."
+    intro="Hay un lugar para ti y para toda tu familia: varones, damas, adolescentes y jóvenes."
   >
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {reuniones.map((r) => <MeetingCard reunion={r} />)}
@@ -160,10 +160,15 @@ const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'l
       <div>
         <p class="eyebrow mb-3">Academia Bíblica</p>
         <h2 class="text-3xl font-semibold sm:text-4xl">Crece en el conocimiento de la Palabra</h2>
-        <p class="mt-5 text-lg leading-relaxed text-stone-600">
-          Materiales de estudio preparados para cada etapa de tu camino con Cristo: desde los fundamentos de la fe hasta
-          la vida devocional.
-        </p>
+        <p class="mt-5 text-lg leading-relaxed text-stone-600">{site.academia.presentacion}</p>
+        {
+          site.academia.horario && (
+            <p class="mt-4 flex items-center gap-2 font-medium text-brand-800">
+              <Icon name="lucide:clock" class="size-4 text-accent-600" />
+              {site.academia.horario}
+            </p>
+          )
+        }
         <a href="/academia" class="btn-secondary mt-8">
           Ver libros de la academia
           <Icon name="lucide:arrow-right" class="size-4" />

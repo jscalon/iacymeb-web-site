@@ -7,6 +7,7 @@ import { enlaceWhatsapp, site } from '@/lib/site';
 
 const { cuentas, pagoMovil } = site.donaciones;
 const { email, whatsapp } = site.contacto;
+const hayDatosBancarios = cuentas.length > 0 || Boolean(pagoMovil.telefono);
 
 const titulo = 'Donaciones';
 const descripcion =
@@ -88,8 +89,19 @@ const migas = [{ label: titulo, href: '/donaciones' }];
         }
 
         <div class="rounded-2xl bg-brand-900 p-6 text-brand-100">
-          <h2 class="text-xl font-semibold text-white">¿Tienes dudas o quieres reportar tu aporte?</h2>
-          <p class="mt-2">Escríbenos y con gusto te atenderemos.</p>
+          {
+            hayDatosBancarios ? (
+              <>
+                <h2 class="text-xl font-semibold text-white">¿Tienes dudas o quieres reportar tu aporte?</h2>
+                <p class="mt-2">Escríbenos y con gusto te atenderemos.</p>
+              </>
+            ) : (
+              <>
+                <h2 class="text-xl font-semibold text-white">¿Quieres hacer un aporte?</h2>
+                <p class="mt-2">Escríbenos y te enviaremos los datos bancarios y de pago móvil de la iglesia.</p>
+              </>
+            )
+          }
           <div class="mt-5 flex flex-wrap gap-3">
             <a href={`mailto:${email}?subject=${encodeURIComponent('Aporte voluntario')}`} class="btn-primary">
               <Icon name="lucide:mail" class="size-4" />

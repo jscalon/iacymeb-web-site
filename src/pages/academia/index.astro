@@ -1,38 +1,61 @@
 ---
 import BookCover from '@/components/BookCover.astro';
+import Icon from '@/components/Icon.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Section from '@/components/Section.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { obtenerOrdenado } from '@/lib/contenido';
+import { site } from '@/lib/site';
 
 const libros = await obtenerOrdenado('libros');
+const { horario, presentacion } = site.academia;
 
 const titulo = 'Academia Bíblica';
-const descripcion =
-  'Libros y materiales de estudio de la Academia Bíblica de la iglesia para crecer en el conocimiento de la Palabra.';
+const descripcion = `Academia Bíblica de ${site.nombreCorto} en ${site.direccion.ciudad}${horario ? ` (${horario.toLowerCase()})` : ''}. ${presentacion ?? ''}`.trim();
 const migas = [{ label: titulo, href: '/academia' }];
 ---
 
 <BaseLayout title={titulo} description={descripcion} migas={migas}>
-  <PageHeader title={titulo} eyebrow="Formación" intro={descripcion} migas={migas} />
+  <PageHeader title={titulo} eyebrow="Formación" intro={presentacion} migas={migas} />
 
-  <Section tono="blanco">
-    <ul class="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+  <Section
+    tono="blanco"
+    eyebrow="Plan de estudio"
+    title="Nuestros libros"
+    intro="Un recorrido paso a paso por la Palabra de Dios y la vida cristiana."
+  >
+    {
+      horario && (
+        <p class="-mt-4 mb-10 inline-flex items-center gap-2 rounded-full bg-accent-100 px-4 py-2 font-medium text-brand-900">
+          <Icon name="lucide:clock" class="size-4 text-accent-600" />
+          {horario}
+        </p>
+      )
+    }
+    <ol class="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
       {
-        libros.map((libro) => (
+        libros.map((libro, i) => (
           <li>
             <a href={`/academia/${libro.id}`} class="group block">
               <BookCover libro={libro} class="transition group-hover:-translate-y-1 group-hover:shadow-xl" />
-              <h2 class="mt-4 text-lg font-semibold group-hover:text-brand-600">{libro.data.titulo}</h2>
-              <p class="mt-1 text-sm leading-relaxed text-stone-600">{libro.data.descripcion}</p>
+              <p class="eyebrow mt-4">Libro {i + 1}</p>
+              <h2 class="mt-1 text-lg font-semibold group-hover:text-brand-600">{libro.data.titulo}</h2>
+              {libro.data.descripcion && (
+                <p class="mt-1 text-sm leading-relaxed text-stone-600">{libro.data.descripcion}</p>
+              )}
             </a>
           </li>
         ))
       }
-    </ul>
+    </ol>
   </Section>
 
-  <Section tono="arena" centrado title="¿Quieres inscribirte?" intro="Escríbenos para conocer las fechas de inicio de cada nivel y cómo obtener los libros.">
+  <Section
+    tono="arena"
+    centrado
+    title="¿Quieres inscribirte?"
+    intro="Escríbenos para conocer cómo inscribirte y cómo obtener los libros."
+  >
     <div class="text-center">
       <a href="/contacto" class="btn-secondary">Solicitar información</a>
     </div>

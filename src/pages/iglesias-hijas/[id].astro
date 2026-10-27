@@ -22,7 +22,7 @@ const { iglesia } = Astro.props;
 const { nombre, ciudad, direccion, pastores, foto, mapa, telefono, instagram, facebook, reuniones } = iglesia.data;
 const { Content } = await render(iglesia);
 
-const consultaMapa = `${direccion}, ${ciudad}, ${site.direccion.pais}`;
+const consultaMapa = [direccion, ciudad, site.direccion.pais].filter(Boolean).join(', ');
 const migas = [
   { label: 'Iglesias hijas', href: '/iglesias-hijas' },
   { label: nombre, href: `/iglesias-hijas/${iglesia.id}` },
@@ -78,7 +78,7 @@ const descripcion = `${nombre}, iglesia hija de ${site.nombreCorto} en ${ciudad}
         }
         <div>
           <h2 class="font-sans text-sm font-semibold tracking-wide text-stone-500 uppercase">Dirección</h2>
-          <p class="mt-2 text-lg">{direccion}, {ciudad}</p>
+          <p class="mt-2 text-lg">{[direccion, ciudad].filter(Boolean).join(', ')}</p>
           <a
             href={mapa ?? enlaceMapaDe(consultaMapa)}
             target="_blank"

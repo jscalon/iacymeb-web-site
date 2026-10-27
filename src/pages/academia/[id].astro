@@ -25,10 +25,12 @@ const migas = [
   { label: titulo, href: `/academia/${libro.id}` },
 ];
 const asunto = encodeURIComponent(`Información sobre el libro "${titulo}"`);
+const descripcionSeo =
+  descripcion ?? `"${titulo}", libro de estudio de la Academia Bíblica de ${site.nombreCorto} en ${site.direccion.ciudad}.`;
 ---
 
-<BaseLayout title={titulo} description={descripcion} migas={migas} type="article">
-  <PageHeader title={titulo} eyebrow={autor} migas={migas} />
+<BaseLayout title={titulo} description={descripcionSeo} migas={migas} type="article">
+  <PageHeader title={titulo} eyebrow={autor ?? 'Academia Bíblica'} migas={migas} />
 
   <Section tono="blanco">
     <div class="grid gap-10 md:grid-cols-[16rem_1fr] lg:gap-16">
@@ -36,8 +38,16 @@ const asunto = encodeURIComponent(`Información sobre el libro "${titulo}"`);
         <BookCover libro={libro} sizes="(min-width: 768px) 256px, 192px" />
       </div>
       <div>
-        <p class="font-serif text-2xl leading-relaxed text-brand-800 italic">{descripcion}</p>
-        <div class="prose-site mt-6">
+        {descripcion && <p class="mb-6 font-serif text-2xl leading-relaxed text-brand-800 italic">{descripcion}</p>}
+        <div class="prose-site">
+          {
+            !descripcion && !libro.body?.trim() && (
+              <p>
+                Libro de estudio de la Academia Bíblica, que se reúne los {site.academia.horario?.toLowerCase()}.
+                Escríbenos para saber cómo obtenerlo e inscribirte.
+              </p>
+            )
+          }
           <Content />
         </div>
         <div class="mt-10 flex flex-wrap gap-3">

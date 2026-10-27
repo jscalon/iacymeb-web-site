@@ -110,8 +110,8 @@ collections:
     sortable_fields: [orden, titulo]
     fields:
       - { name: titulo, label: Título, widget: string }
-      - { name: autor, label: Autor, widget: string }
-      - { name: descripcion, label: Descripción breve, widget: text }
+      - { name: autor, label: Autor, widget: string, required: false }
+      - { name: descripcion, label: Descripción breve, widget: text, required: false }
       - { name: portada, label: Portada, widget: image, required: false }
       - { name: enlace, label: Enlace para obtener el libro, widget: string, required: false, hint: 'URL completa (https://…). Opcional.' }
       - { name: orden, label: Orden, widget: number, value_type: int, default: 0 }
@@ -150,8 +150,8 @@ collections:
     fields:
       - { name: nombre, label: Nombre, widget: string }
       - { name: ciudad, label: Ciudad, widget: string }
-      - { name: direccion, label: Dirección, widget: string }
-      - { name: pastores, label: Pastores, widget: list, field: { name: nombre, label: Nombre, widget: string } }
+      - { name: direccion, label: Dirección, widget: string, required: false }
+      - { name: pastores, label: Pastores, widget: list, required: false, field: { name: nombre, label: Nombre, widget: string } }
       - { name: reuniones, label: Horario de reuniones, widget: string, required: false, hint: 'Ejemplo: Domingos 9:00 a. m.' }
       - { name: foto, label: Foto, widget: image, required: false }
       - { name: mapa, label: Enlace de Google Maps, widget: string, required: false, hint: 'Opcional. Si se deja vacío, se busca la dirección.' }
@@ -227,6 +227,12 @@ collections:
               - { name: facebook, label: Facebook, widget: string, required: false }
               - { name: youtube, label: YouTube, widget: string, required: false }
               - { name: spotify, label: Spotify, widget: string, required: false }
+          - name: academia
+            label: Academia Bíblica
+            widget: object
+            fields:
+              - { name: horario, label: Horario, widget: string, required: false, hint: 'Ejemplo: Domingos, 9:00 a. m.' }
+              - { name: presentacion, label: Presentación, widget: text, required: false }
           - name: donaciones
             label: Donaciones
             widget: object
@@ -234,6 +240,7 @@ collections:
               - name: cuentas
                 label: Cuentas bancarias
                 widget: list
+                required: false
                 fields:
                   - { name: banco, label: Banco, widget: string }
                   - { name: titular, label: Titular, widget: string }

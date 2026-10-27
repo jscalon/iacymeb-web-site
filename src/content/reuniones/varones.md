@@ -1,8 +1,8 @@
 ---
 nombre: Reunión de varones
-dia: Sábado
-hora: 6:00 p. m.
+dia: Martes
+hora: 7:00 p. m.
 descripcion: Comunión, oración y formación para hombres de todas las edades.
-frecuencia: Primer sábado de cada mes
+frecuencia: Cada dos semanas
 orden: 3
 ---

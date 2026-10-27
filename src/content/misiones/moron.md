@@ -1,12 +1,12 @@
 ---
 titulo: Obra misionera en Morón
-lugar: Morón
-resumen: Una obra que comenzó con visitas y estudios bíblicos en hogares y que hoy sigue creciendo.
+lugar: Morón, Carabobo
+resumen: Llevamos el evangelio más allá de nuestra ciudad, acompañando a las familias de Morón con la Palabra de Dios.
 orden: 1
 ---
 
 <!-- TODO: reemplazar con la reseña real de la obra en Morón. -->
 
-La obra misionera en Morón nació de la visión de la iglesia de llevar el evangelio más allá de nuestra ciudad. Un equipo de hermanos comenzó a visitar la zona, compartiendo la Palabra en hogares y orando por las familias.
+Como iglesia de la Alianza Cristiana y Misionera, creemos que el evangelio debe llegar más allá de nuestras paredes. Por eso sostenemos una obra misionera en Morón, estado Carabobo.
 
-Hoy la obra cuenta con un grupo de creyentes que se reúnen regularmente. Puedes apoyar con tus oraciones, tu tiempo o tus aportes.
+Puedes apoyar esta obra con tus oraciones, tu tiempo o tus aportes voluntarios. Escríbenos si quieres saber más o participar.

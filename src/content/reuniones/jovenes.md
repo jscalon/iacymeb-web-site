@@ -1,7 +1,8 @@
 ---
-nombre: Jóvenes
+nombre: Jóvenes (18 años en adelante)
 dia: Sábado
-hora: 4:00 p. m.
-descripcion: Alabanza, enseñanza y actividades para adolescentes y jóvenes.
-orden: 5
+hora: 7:00 p. m.
+descripcion: Alabanza, enseñanza bíblica y comunión para jóvenes.
+frecuencia: Cada dos semanas
+orden: 7
 ---
