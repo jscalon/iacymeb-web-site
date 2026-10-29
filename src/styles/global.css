@@ -1,40 +1,56 @@
 @import "tailwindcss";
 
 /*
- * Identidad visual PROVISIONAL.
- * Cuando la iglesia envíe logo, colores y tipografía, basta con cambiar estos tokens
- * (y las fuentes en astro.config.mjs). Todo el sitio usa estas variables.
+ * Identidad visual oficial:
+ * - Principal (Vinotinto): #741102
+ * - Secundario (Verde azulado): #042d29
+ * - Secundario / Acento (Beige): #d4c9b5
+ * - Tipografías: Poppins y Authenia
  */
 @theme {
-  /* Azul profundo: color principal */
-  --color-brand-50: #eef4fb;
-  --color-brand-100: #d6e4f5;
-  --color-brand-200: #adc8ea;
-  --color-brand-300: #7ca5d9;
-  --color-brand-400: #4c7fc2;
-  --color-brand-500: #2f62a6;
-  --color-brand-600: #234d86;
-  --color-brand-700: #1d3f6d;
-  --color-brand-800: #17304f;
-  --color-brand-900: #10223a;
-  --color-brand-950: #0a1626;
+  /* Vinotinto (#741102): color principal */
+  --color-brand-50: #fdf3f1;
+  --color-brand-100: #fbe4df;
+  --color-brand-200: #f6ccc4;
+  --color-brand-300: #eea699;
+  --color-brand-400: #e17360;
+  --color-brand-500: #ce4832;
+  --color-brand-600: #961a06;
+  --color-brand-700: #741102;
+  --color-brand-800: #630f02;
+  --color-brand-900: #520b01;
+  --color-brand-950: #2e0501;
 
-  /* Dorado cálido: acentos y llamados a la acción */
-  --color-accent-50: #fdf8ec;
-  --color-accent-100: #f9edcc;
-  --color-accent-200: #f2d995;
-  --color-accent-300: #e9c05c;
-  --color-accent-400: #dfa935;
-  --color-accent-500: #c98c1f;
-  --color-accent-600: #a96c18;
-  --color-accent-700: #864f18;
+  /* Verde azulado (#042d29): color secundario oscuro */
+  --color-secondary-50: #eef7f6;
+  --color-secondary-100: #d5ebe8;
+  --color-secondary-200: #aed7d2;
+  --color-secondary-300: #7cbab3;
+  --color-secondary-400: #4d9890;
+  --color-secondary-500: #2f7a73;
+  --color-secondary-600: #1f5f59;
+  --color-secondary-700: #154944;
+  --color-secondary-800: #0b3935;
+  --color-secondary-900: #042d29;
+  --color-secondary-950: #021d1a;
+
+  /* Beige (#d4c9b5): acentos y llamados a la acción */
+  --color-accent-50: #faf8f4;
+  --color-accent-100: #f2ede4;
+  --color-accent-200: #e5dccb;
+  --color-accent-300: #dfd6c6;
+  --color-accent-400: #d4c9b5;
+  --color-accent-500: #8c7756;
+  --color-accent-600: #6e5b3e;
+  --color-accent-700: #54442d;
 
   /* Neutros cálidos para fondos */
   --color-paper: #fbfaf7;
-  --color-sand: #f3f0e9;
+  --color-sand: #f2eee6;
 
-  --font-serif: var(--font-lora), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-poppins), system-ui, sans-serif;
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-script: 'Authenia', cursive;
 }
 
 @layer base {

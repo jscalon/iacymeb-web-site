@@ -37,19 +37,18 @@ Las imágenes subidas desde el panel se guardan junto a cada entrada y Astro las
 
 Si se agrega un campo nuevo, hay que añadirlo en `src/content.config.ts` **y** en `public/admin/config.yml`.
 
-## Cambiar la identidad visual
+## Identidad visual
 
-La identidad actual es **provisional**:
-
-1. **Colores:** editar las variables `--color-brand-*` y `--color-accent-*` en `src/styles/global.css`.
-2. **Tipografías:** cambiar los nombres en `fonts` de `astro.config.mjs` (Astro las descarga y sirve desde el propio sitio).
-3. **Logo:** reemplazar el SVG de `src/components/Logo.astro` y la marca de `scripts/generar-imagenes.mjs`; luego ejecutar `pnpm generar:imagenes`.
+1. **Colores:** variables `--color-brand-*` (`#741102` vinotinto), `--color-secondary-*` (`#042d29` verde azulado) y `--color-accent-*` (`#d4c9b5` beige) en `src/styles/global.css`.
+2. **Tipografías:** `Poppins` (configurada en `astro.config.mjs`) y `Authenia` (`--font-script` en `src/styles/global.css`).
+3. **Logo:** archivo fuente en `src/assets/logo.png`, renderizado en `src/components/Logo.astro` y usado por `scripts/generar-imagenes.mjs` (`pnpm generar:imagenes`).
 
 ## Pendientes (`TODO`)
 
-- Datos reales en `src/data/site.json`: dirección, enlace o coordenadas del mapa, teléfono, WhatsApp, redes y cuentas bancarias.
-- Historia real en `src/content/nosotros/nosotros.md` y reseña de Morón en `src/content/misiones/moron.md`.
-- Nombres y fotos del equipo pastoral y de la junta, iglesias hijas, horarios reales y portadas de los libros.
+- Datos bancarios y de pago móvil en `src/data/site.json`.
+- Historia, misión, visión y versículo lema en `src/content/nosotros/nosotros.md`.
+- Fotos de la obra misionera en Morón (`src/content/misiones/moron.md`).
+- Nombres y fotos del equipo pastoral y de la junta, iglesias hijas, ministerios y portadas/datos de los libros.
 - Dominio definitivo: actualizar `SITE_URL` en `astro.config.mjs` y `site_url` en `public/admin/config.yml`.
 
 ## Despliegue en Netlify

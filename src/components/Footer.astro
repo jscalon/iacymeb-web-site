@@ -13,14 +13,16 @@ const enlaces = navegacion.flatMap((item) => item.children ?? [item]).filter((it
 const anio = new Date().getFullYear();
 ---
 
-<footer class="bg-brand-950 text-brand-100">
+<footer class="bg-secondary-900 text-secondary-100">
   <div class="container-site grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
     <div class="space-y-4">
       <a href="/" class="flex items-center gap-3">
-        <Logo class="size-11" />
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-paper p-1 shadow-sm">
+          <Logo class="size-10" />
+        </span>
         <span class="font-serif text-lg font-semibold text-white">{site.nombreCorto}</span>
       </a>
-      <p class="text-sm leading-relaxed text-brand-200">{site.lema}</p>
+      <p class="text-sm leading-relaxed text-secondary-200">{site.lema}</p>
       <SocialLinks />
     </div>
 
@@ -31,7 +33,7 @@ const anio = new Date().getFullYear();
           reuniones.map((r) => (
             <li>
               <span class="block font-medium text-white">{r.data.nombre}</span>
-              <span class="text-brand-200">
+              <span class="text-secondary-200">
                 {r.data.dia}, {r.data.hora}
               </span>
             </li>
@@ -88,7 +90,7 @@ const anio = new Date().getFullYear();
   </div>
 
   <div class="border-t border-white/10">
-    <div class="container-site flex flex-col gap-2 py-6 text-xs text-brand-300 sm:flex-row sm:justify-between">
+    <div class="container-site flex flex-col gap-2 py-6 text-xs text-secondary-300 sm:flex-row sm:justify-between">
       <p>© {anio} {site.nombre}</p>
       <p>Miembro de la {site.denominacion}</p>
     </div>

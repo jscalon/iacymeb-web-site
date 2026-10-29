@@ -19,18 +19,10 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: 'Lora',
-      cssVariable: '--font-lora',
-      weights: ['400 700'],
+      name: 'Poppins',
+      cssVariable: '--font-poppins',
+      weights: ['400', '500', '600', '700'],
       styles: ['normal', 'italic'],
-      subsets: ['latin', 'latin-ext'],
-      fallbacks: ['Georgia', 'serif'],
-    },
-    {
-      provider: fontProviders.fontsource(),
-      name: 'Inter',
-      cssVariable: '--font-inter',
-      weights: ['400 700'],
       subsets: ['latin', 'latin-ext'],
       fallbacks: ['system-ui', 'sans-serif'],
     },

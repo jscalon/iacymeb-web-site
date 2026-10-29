@@ -26,9 +26,9 @@ const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'l
 
 <BaseLayout jsonLd={[esquemaIglesia(Astro.site!)]}>
   <!-- Portada -->
-  <section class="relative overflow-hidden bg-brand-900 text-white">
+  <section class="relative overflow-hidden bg-brand-700 text-white">
     <div class="patron-cruces absolute inset-0 opacity-[0.06]" aria-hidden="true"></div>
-    <div class="absolute -top-32 -left-32 size-96 rounded-full bg-brand-500/30 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -top-32 -left-32 size-96 rounded-full bg-secondary-900/40 blur-3xl" aria-hidden="true"></div>
     <div class="absolute -right-24 -bottom-40 size-[28rem] rounded-full bg-accent-400/20 blur-3xl" aria-hidden="true">
     </div>
 
@@ -202,7 +202,7 @@ const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'l
     <div class="grid gap-6 md:grid-cols-2">
       <a
         href="/obra-misionera"
-        class="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-3xl bg-brand-800 p-8 text-white"
+        class="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-3xl bg-secondary-900 p-8 text-white"
       >
         <div class="patron-cruces absolute inset-0 opacity-10" aria-hidden="true"></div>
         <Icon name="lucide:globe" class="absolute top-8 right-8 size-14 text-accent-300/70" />
@@ -210,7 +210,7 @@ const iconosCreencias = ['lucide:cross', 'lucide:flame', 'lucide:hand-heart', 'l
         <h3 class="relative mt-2 text-2xl font-semibold text-white">
           {misiones.map((m) => m.data.lugar).join(', ') || 'Nuestra obra misionera'}
         </h3>
-        <p class="relative mt-2 text-brand-100">{misiones[0]?.data.resumen}</p>
+        <p class="relative mt-2 text-secondary-100">{misiones[0]?.data.resumen}</p>
         <span class="relative mt-5 inline-flex items-center gap-2 font-semibold text-accent-300 group-hover:gap-3">
           Conoce la obra <Icon name="lucide:arrow-right" class="size-4" />
         </span>
