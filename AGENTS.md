@@ -22,6 +22,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
     - Secondary colors: `#042d29` (Verde azulado, `--color-secondary-*`) and `#d4c9b5` (Beige, `--color-accent-*`)
     - Typography: `Poppins` (loaded via Fontsource) and `Authenia` (`--font-script`, awaiting local `.ttf`/`.otf` file if needed)
     - Official logo: `src/assets/logo.png` (derived assets generated via `pnpm generar:imagenes`)
+    - Temple cover photo: `src/assets/templo.jpg` (used in the home hero and `/nosotros` history section)
   - **Quiénes somos (`src/content/nosotros/nosotros.md`):** misión, visión, reseña histórica (1981–2026), nuestra identidad (Evangelio cuádruple + misión) y declaración de fe (11 artículos).
   - **Junta administrativa (`src/content/equipo/`):** Hno. Ennis Chacín (Tesorero), Hno. Jesús Pernalete (Secretario), Hno. Wilmer Zreik (Vocero), Hna. Esther Romero (Vocera), Hna. Elizabeth Ochoa (Vocera) y Hna. Yoibel Godoy (Vocera). *(Nota: cambio de junta a comienzos de 2027).*
 - **Still pending from the church secretary:**
@@ -31,7 +32,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
   4. **Donaciones:** cuentas bancarias, pago móvil y otros medios (`src/data/site.json`).
   5. **Obra misionera en Morón:** fotos y confirmar si existen otras obras misioneras (`src/content/misiones/`). *(Reseña y sectores ya integrados).*
   6. **Iglesias hijas (Yagua, Coro, Tinaquillo):** nombre oficial, dirección/mapa, pastores, horarios, contacto/redes, historia y foto (`src/content/iglesias-hijas/`).
-  7. **Imagen de la iglesia:** foto de portada (congregación o templo) y archivo de fuente `Authenia` si está disponible.
+  7. **Tipografía opcional:** archivo de fuente `Authenia` (`.ttf` o `.otf`) si está disponible.
 - **Technical pending items:**
   - Configure GitHub OAuth in Netlify for `/admin` (Sveltia CMS) and grant repo access to the secretary.
   - Custom domain (update `SITE_URL` in `astro.config.mjs` and `site_url` in `public/admin/config.yml`).

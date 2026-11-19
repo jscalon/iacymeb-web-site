@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import templo from '@/assets/templo.jpg';
 import BookCover from '@/components/BookCover.astro';
 import Icon from '@/components/Icon.astro';
 import MapEmbed from '@/components/MapEmbed.astro';
@@ -26,11 +27,22 @@ const iconosCreencias = ['lucide:cross', 'lucide:hand-heart', 'lucide:flame', 'l
 
 <BaseLayout jsonLd={[esquemaIglesia(Astro.site!)]}>
   <!-- Portada -->
-  <section class="relative overflow-hidden bg-brand-700 text-white">
-    <div class="patron-cruces absolute inset-0 opacity-[0.06]" aria-hidden="true"></div>
-    <div class="absolute -top-32 -left-32 size-96 rounded-full bg-secondary-900/40 blur-3xl" aria-hidden="true"></div>
-    <div class="absolute -right-24 -bottom-40 size-[28rem] rounded-full bg-accent-400/20 blur-3xl" aria-hidden="true">
+  <section class="relative overflow-hidden bg-brand-900 text-white">
+    <Image
+      src={templo}
+      alt={`Fachada de ${site.nombre}`}
+      widths={[800, 1400, 2000]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 size-full object-cover object-center"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-brand-950/90 via-brand-900/80 to-brand-900/65"
+      aria-hidden="true"
+    >
     </div>
+    <div class="patron-cruces absolute inset-0 opacity-[0.05]" aria-hidden="true"></div>
 
     <div class="container-site relative grid items-center gap-12 py-20 lg:grid-cols-[1.4fr_1fr] lg:py-28">
       <div>

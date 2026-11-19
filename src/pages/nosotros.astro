@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { render } from 'astro:content';
+import templo from '@/assets/templo.jpg';
 import Icon from '@/components/Icon.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Section from '@/components/Section.astro';
@@ -33,6 +35,13 @@ const iconosCreencias = ['lucide:cross', 'lucide:hand-heart', 'lucide:flame', 'l
   </Section>
 
   <Section eyebrow="Reseña histórica" title="Nuestra historia">
+    <Image
+      src={templo}
+      alt={`Templo de ${site.nombre}`}
+      widths={[700, 1400]}
+      sizes="(min-width: 1024px) 896px, 100vw"
+      class="mb-10 aspect-[2/1] w-full max-w-4xl rounded-3xl object-cover shadow-md"
+    />
     <div class="prose-site">
       <Content />
     </div>
