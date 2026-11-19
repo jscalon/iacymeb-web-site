@@ -174,11 +174,17 @@ collections:
           - { name: mision, label: Misión, widget: text }
           - { name: vision, label: Visión, widget: text }
           - name: creencias
-            label: En qué creemos
+            label: Nuestra identidad (Evangelio cuádruple)
             widget: list
             fields:
               - { name: titulo, label: Título, widget: string }
               - { name: texto, label: Texto, widget: text }
+          - { name: identidadMision, label: Nuestra identidad (Tenemos una misión), widget: text, required: false }
+          - name: declaracionFe
+            label: Declaración de fe (artículos)
+            widget: list
+            required: false
+            field: { name: articulo, label: Artículo, widget: text }
           - { name: body, label: Historia, widget: markdown }
 
   - name: configuracion

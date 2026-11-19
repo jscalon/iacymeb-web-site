@@ -19,6 +19,8 @@ const nosotros = defineCollection({
     mision: z.string(),
     vision: z.string(),
     creencias: z.array(z.object({ titulo: z.string(), texto: z.string() })),
+    identidadMision: textoOpcional,
+    declaracionFe: z.array(z.string()).default([]),
   }),
 });
 

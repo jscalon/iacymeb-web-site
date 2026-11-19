@@ -11,6 +11,7 @@ const { persona, grande = false } = Astro.props;
 const { nombre, cargo, foto } = persona.data;
 const { Content } = await render(persona);
 const iniciales = nombre
+  .replace(/^(Pr\.?|Pastor(a)?|Hno\.?|Hna\.?)\s+/i, '')
   .split(/\s+/)
   .slice(0, 2)
   .map((p) => p[0])

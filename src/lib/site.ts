@@ -84,7 +84,7 @@ export const navegacion: NavItem[] = [
     href: '/nosotros',
     children: [
       { label: 'Quiénes somos', href: '/nosotros' },
-      { label: 'Equipo pastoral', href: '/equipo-pastoral' },
+      { label: 'Liderazgo', href: '/liderazgo' },
       { label: 'Ministerios', href: '/ministerios' },
     ],
   },

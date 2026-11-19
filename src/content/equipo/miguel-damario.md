@@ -1,6 +1,6 @@
 ---
-nombre: Miguel Damario
-cargo: Pastor principal
+nombre: Pr. Miguel Damario
+cargo: Pastor titular
 grupo: pastoral
 orden: 1
 ---

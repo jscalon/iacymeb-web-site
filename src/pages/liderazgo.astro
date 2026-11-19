@@ -9,23 +9,23 @@ const equipo = await obtenerOrdenado('equipo');
 const pastores = equipo.filter((p) => p.data.grupo === 'pastoral');
 const junta = equipo.filter((p) => p.data.grupo === 'junta');
 
-const titulo = 'Equipo pastoral';
-const descripcion = 'Conoce a los pastores y a la junta administrativa de la iglesia.';
+const titulo = 'Liderazgo';
+const descripcion = 'Conoce al equipo pastoral y a la junta administrativa de la iglesia.';
 const migas = [
   { label: 'Nosotros', href: '/nosotros' },
-  { label: titulo, href: '/equipo-pastoral' },
+  { label: titulo, href: '/liderazgo' },
 ];
 ---
 
 <BaseLayout title={titulo} description={descripcion} migas={migas}>
   <PageHeader
     title={titulo}
-    eyebrow="Liderazgo"
+    eyebrow="Equipo pastoral y junta administrativa"
     intro="Personas llamadas por Dios para cuidar, enseñar y servir a la congregación."
     migas={migas}
   />
 
-  <Section tono="blanco" eyebrow="Pastores" title="Nuestros pastores">
+  <Section tono="blanco" eyebrow="Equipo pastoral" title="Nuestros pastores">
     <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
       {pastores.map((p) => <PersonCard persona={p} grande />)}
     </div>

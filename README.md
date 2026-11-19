@@ -46,9 +46,8 @@ Si se agrega un campo nuevo, hay que añadirlo en `src/content.config.ts` **y** 
 ## Pendientes (`TODO`)
 
 - Datos bancarios y de pago móvil en `src/data/site.json`.
-- Historia, misión, visión y versículo lema en `src/content/nosotros/nosotros.md`.
 - Fotos de la obra misionera en Morón (`src/content/misiones/moron.md`).
-- Nombres y fotos del equipo pastoral y de la junta, iglesias hijas, ministerios y portadas/datos de los libros.
+- Fotos del equipo pastoral, iglesias hijas, ministerios y portadas/datos de los libros.
 - Dominio definitivo: actualizar `SITE_URL` en `astro.config.mjs` y `site_url` en `public/admin/config.yml`.
 
 ## Despliegue en Netlify
